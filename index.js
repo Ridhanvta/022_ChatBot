@@ -24,7 +24,7 @@ app.post("/api/chat", async (req, res) => {
         }
         
         const response = await fetch(
-            "https://api.openrouter.ai/v1/chat/completions", 
+            "https://openrouter.ai/api/v1/chat/completions", 
             {
                 method: "POST",
                 
@@ -34,10 +34,11 @@ app.post("/api/chat", async (req, res) => {
                 },
 
                 body: JSON.stringify({
-                    model: "nvidia/nemotron-3.5-super-v1:free",
+                    model: "openrouter/free",
                     messages: message,
                     temperature: 0.7,
-                    max_tokens: 1000
+                    max_tokens: 1000,
+                    stream: true
                 })
             }
         );
@@ -86,7 +87,7 @@ app.post("/api/chat", async (req, res) => {
                     continue;
                 }
 
-                if (trimmedLine.startsWith("data: ")) {
+                if (!trimmedLine.startsWith("data: ")) {
                     continue;
                 }
 
